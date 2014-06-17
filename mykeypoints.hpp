@@ -122,21 +122,21 @@ private:
 		const cv::Mat  rightImageGrey = cv::imread(this->right_file_name, 0);
 
 		Ptr<FeatureDetector> detector;
-        detector = new DynamicAdaptedFeatureDetector(new FastAdjuster(10, true), 5000, 10000, 10);
-        detector->detect(leftImageGrey, keypoints_1);
-        detector->detect(rightImageGrey, keypoints_2);
-
-		
-        Ptr<DescriptorExtractor> extractor = DescriptorExtractor::create("SIFT");
-		
-        cv::Mat descriptors_1, descriptors_2;
-        extractor->compute(leftImageGrey, keypoints_1, descriptors_1);
-        extractor->compute(rightImageGrey, keypoints_2, descriptors_2);
-
-		
-        vector< vector<DMatch> > matches;
+	        detector = new DynamicAdaptedFeatureDetector(new FastAdjuster(10, true), 5000, 10000, 10);
+	        detector->detect(leftImageGrey, keypoints_1);
+	        detector->detect(rightImageGrey, keypoints_2);
+	
+			
+	        Ptr<DescriptorExtractor> extractor = DescriptorExtractor::create("SIFT");
+			
+	        cv::Mat descriptors_1, descriptors_2;
+	        extractor->compute(leftImageGrey, keypoints_1, descriptors_1);
+	        extractor->compute(rightImageGrey, keypoints_2, descriptors_2);
+	
+			
+	        vector< vector<DMatch> > matches;
 		Ptr<DescriptorMatcher> matcher = DescriptorMatcher::create("BruteForce");
-        matcher->knnMatch(descriptors_1, descriptors_2, matches, 500);
+	        matcher->knnMatch(descriptors_1, descriptors_2, matches, 500);
 
 		double tresholdDist = 0.25 * sqrt(double(leftImageGrey.size().height*leftImageGrey.size().height + leftImageGrey.size().width*leftImageGrey.size().width));
 
@@ -150,7 +150,7 @@ private:
 
 				double dist = sqrt(( from.x - to.x ) * ( from.x - to.x ) + ( from.y - to.y ) * ( from.y - to.y ));
 
-                if ( dist < tresholdDist && abs(from.y - to.y)<5 )
+                		if ( dist < tresholdDist && abs(from.y - to.y)<5 )
 				{
 					good_matches2.push_back(matches[i][j]);
 					j = matches[i].size();
