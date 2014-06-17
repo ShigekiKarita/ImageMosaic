@@ -1,5 +1,15 @@
 
-## 動かし方
+## 準備
+
+* C++コンパイラのインストール(C++11に対応したもの)
+* OpenCVのインストール http://opencv.org/downloads.html
+* ソースコードのDL (右側にZIPのリンク) または
+```
+git clone https://github.com/ShigekiKarita/ImageMosaic.git
+```
+
+
+## 利用方法
 
 * ```Makefile``` のOpenCVパスを動かす環境に合わせる
 
