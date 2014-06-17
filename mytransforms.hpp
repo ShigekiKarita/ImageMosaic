@@ -188,7 +188,7 @@ cv::Mat_<double> RGB_sieve_LMS_helmat(const T& rgb_source, const T& rgb_distinat
 
 
 template <class T = cv::Mat_< cv::Vec3b >, class U = std::vector< cv::Vec2f >>
-cv::Mat_<double> RGB_LMS_helmat(const T& rgb_source, const T& rgb_distination, U source_keypoints, U distination_keypoints, const size_t new_size = 10)
+cv::Mat_<double> RGB_weighted_helmat(const T& rgb_source, const T& rgb_distination, U source_keypoints, U distination_keypoints, const size_t new_size = 10)
 {
 	if ( source_keypoints.size() > new_size )
 	{
@@ -245,13 +245,31 @@ cv::Mat_<double> RGB_LMS_helmat(const T& rgb_source, const T& rgb_distination, U
 	return  cv::Mat_<double>(2, 3) << K(0, 0), K(0, 1), K(0, 2), -K(0, 1), K(0, 0), K(0, 3);
 }
 
+namespace Helmat {
+    enum operation
+    {
+        none = 0,
+        threshold,
+        weight
+    };
+}
 
 template <class T = cv::Mat_< cv::Vec3b >, class U = std::vector< cv::Vec2f >>
-void mosaic_with_helmat(const T& rgb_source, const T& rgb_distination, U& source_keypoints, U& distination_keypoints, bool is_display = true)
+void mosaic_with_helmat(const T& rgb_source, const T& rgb_distination, U& source_keypoints, U& distination_keypoints, Helmat::operation op = Helmat::none,  bool is_display = true)
 {
-	cv::Mat_<double> helmat = least_mean_square_helmat(source_keypoints, distination_keypoints);
-	//const auto& helmat = RGB_sieve_LMS_helmat(rgb_source, rgb_distination, source_keypoints, distination_keypoints);
-
+    cv::Mat_<double> helmat;
+    
+    switch (op) {
+        case Helmat::threshold:
+            helmat = RGB_sieve_LMS_helmat(rgb_source, rgb_distination, source_keypoints, distination_keypoints);
+            break;
+        case Helmat::weight:
+            helmat = RGB_weighted_helmat(rgb_source, rgb_distination, source_keypoints, distination_keypoints);
+        default:
+            helmat = least_mean_square_helmat(source_keypoints, distination_keypoints);
+            break;
+    }
+    
 	cv::Mat_< cv::Vec3b > result;
 	warpAffine(rgb_source, result, helmat, cv::Size(( ( int ) rgb_source.cols * 2 ), rgb_source.rows * 2));
 

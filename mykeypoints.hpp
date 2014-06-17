@@ -38,7 +38,7 @@ public:
 		aquire_keypoints(matches, keys1, keys2);
 	}
 
-	void fast_init()
+	void adjust_init()
 	{
 		std::vector<cv::DMatch> matches;
 		std::vector< cv::KeyPoint > keys1, keys2;
