@@ -113,52 +113,6 @@ private:
 		matches.resize(shoten_size > minimum_size ? shoten_size : minimum_size);
 	}
 
-	void good_matches(std::vector< cv::KeyPoint >& keypoints_1, std::vector< cv::KeyPoint >& keypoints_2, std::vector< cv::DMatch >& good_matches2)
-	{
-		using namespace std;
-		using namespace cv;
-
-		const cv::Mat  leftImageGrey = cv::imread(this->left_file_name, 0);
-		const cv::Mat  rightImageGrey = cv::imread(this->right_file_name, 0);
-
-		Ptr<FeatureDetector> detector;
-	        detector = new DynamicAdaptedFeatureDetector(new FastAdjuster(10, true), 5000, 10000, 10);
-	        detector->detect(leftImageGrey, keypoints_1);
-	        detector->detect(rightImageGrey, keypoints_2);
-	
-			
-	        Ptr<DescriptorExtractor> extractor = DescriptorExtractor::create("SIFT");
-			
-	        cv::Mat descriptors_1, descriptors_2;
-	        extractor->compute(leftImageGrey, keypoints_1, descriptors_1);
-	        extractor->compute(rightImageGrey, keypoints_2, descriptors_2);
-	
-			
-	        vector< vector<DMatch> > matches;
-		Ptr<DescriptorMatcher> matcher = DescriptorMatcher::create("BruteForce");
-	        matcher->knnMatch(descriptors_1, descriptors_2, matches, 500);
-
-		double tresholdDist = 0.25 * sqrt(double(leftImageGrey.size().height*leftImageGrey.size().height + leftImageGrey.size().width*leftImageGrey.size().width));
-
-		good_matches2.reserve(matches.size());
-		for ( size_t i = 0; i < matches.size(); ++i )
-		{
-			for ( size_t j = 0; j < matches[i].size(); j++ )
-			{
-				Point2f from = keypoints_1[matches[i][j].queryIdx].pt;
-				Point2f to = keypoints_2[matches[i][j].trainIdx].pt;
-
-				double dist = sqrt(( from.x - to.x ) * ( from.x - to.x ) + ( from.y - to.y ) * ( from.y - to.y ));
-
-                		if ( dist < tresholdDist && abs(from.y - to.y)<5 )
-				{
-					good_matches2.push_back(matches[i][j]);
-					j = matches[i].size();
-				}
-			}
-		}
-	}
-
 	template<class T = cv::Mat, class U = std::vector< cv::KeyPoint >>
 	void aquire_keypoints(const T& matches, const U& keys1, const U& keys2)
 	{
