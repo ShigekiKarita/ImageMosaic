@@ -150,7 +150,7 @@ private:
 
 				double dist = sqrt(( from.x - to.x ) * ( from.x - to.x ) + ( from.y - to.y ) * ( from.y - to.y ));
 
-                if ( dist < tresholdDist && abs(from.y - to.y)<5 )
+                		if ( dist < tresholdDist && abs(from.y - to.y)<5 )
 				{
 					good_matches2.push_back(matches[i][j]);
 					j = matches[i].size();
