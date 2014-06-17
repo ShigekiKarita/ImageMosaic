@@ -10,13 +10,13 @@ void convert_to_filename(int level, int i, std::string* filenames)
 	{
 		filenames[0] = "mosaic/Level" + std::to_string(level) + "/" + l + "-010-2.ppm";
 		filenames[1] = "mosaic/Level" + std::to_string(level) + "/" + l + "-010-1.ppm";
-        filenames[2] = "mosaic/Level" + std::to_string(level) + "/" + l + "-010.txt";
+        	filenames[2] = "mosaic/Level" + std::to_string(level) + "/" + l + "-010.txt";
 	}
 	else
 	{
 		filenames[0] = "mosaic/Level" + std::to_string(level) + "/" + l + "-00" + std::to_string(i) + "-2.ppm";
 		filenames[1] = "mosaic/Level" + std::to_string(level) + "/" + l + "-00" + std::to_string(i) + "-1.ppm";
-        filenames[2] = "mosaic/Level" + std::to_string(level) + "/" + l + "-00" + std::to_string(i) + ".txt";
+        	filenames[2] = "mosaic/Level" + std::to_string(level) + "/" + l + "-00" + std::to_string(i) + ".txt";
 	}
 };
 
