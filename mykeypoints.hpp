@@ -32,9 +32,7 @@ public:
 		std::vector< cv::KeyPoint > keys1, keys2;
 
 		detect_features(matches, keys1, keys2);
-		
 		std::sort(matches.begin(), matches.end());
-
 		aquire_keypoints(matches, keys1, keys2);
 	}
 
@@ -47,9 +45,7 @@ public:
 		this->extractor = cv::DescriptorExtractor::create("SURF");
 
 		detect_features(matches, keys1, keys2);
-		
 		std::sort(matches.begin(), matches.end());
-
 		aquire_keypoints(matches, keys1, keys2);
 	}
 
