@@ -2,7 +2,7 @@
 # FIT TO YOUR ENVIRONMENT
 INCPATH = -I/usr/local/Cellar/opencv/2.4.9/include
 LIBPATH = -L/usr/local/Cellar/opencv/2.4.9/lib
-CXXFLAGS =  -std=c++11 -O2 -g -Wall -Wextra -stdlib=libc++ -fmessage-length=0 
+CXXFLAGS =  -std=c++11 -O2 -Wall -Wextra -stdlib=libc++
 
 TARGET =    main
 OBJS =      main.o
