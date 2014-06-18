@@ -105,14 +105,6 @@ private:
 		}
 	}
 
-	template<class T = std::vector<cv::DMatch>>
-	void sieve_matches(const double sieve_rate, const size_t minimum_size, T& matches)
-	{
-		size_t shoten_size = matches.size() * sieve_rate;
-
-		matches.resize(shoten_size > minimum_size ? shoten_size : minimum_size);
-	}
-
 	template<class T = cv::Mat, class U = std::vector< cv::KeyPoint >>
 	void aquire_keypoints(const T& matches, const U& keys1, const U& keys2)
 	{
